@@ -167,11 +167,15 @@ dotnet build -c Release
    - 開啟檔案總管，進入專案的 `scripts/` 資料夾
 
 2. **執行安裝腳本**
-   - **Windows 批次檔**：直接雙擊 `install-addon.bat`
-   - **PowerShell**：右鍵選擇「以系統管理員身分執行 PowerShell」
-     ```powershell
-     powershell -ExecutionPolicy Bypass -File install-addon.ps1
-     ```
+   - 右鍵選擇 `install-addon.ps1`
+   - 選擇「以 PowerShell 執行」
+   
+   > 💡 **如果遇到權限問題**：
+   > 請以系統管理員身分開啟 PowerShell，並執行：
+   > ```powershell
+   > Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+   > .\install-addon.ps1
+   > ```
 
 3. **腳本會自動執行**
    - 編譯 C# 專案
@@ -1236,6 +1240,31 @@ A: 確認 MCP Server 設定檔路徑正確，並重新啟動 AI 應用程式。
 - `49152-65535`：動態/私有埠（可自由使用）
 
 `8765` 屬於註冊埠範圍，通常不會與系統服務衝突，但仍可能被其他應用程式佔用。
+
+---
+
+## ❓ 常見問題與疑難排解
+
+如果您在安裝過程中遇到問題，請參考以下解法：
+
+### 1. 執行 .bat 批次檔時閃退或報錯
+- **症狀**：點擊 `install-addon.bat` 視窗一閃即逝，或顯示 `The system cannot find the path`。
+- **原因**：若您是透過 Git 在不同作業系統間同步（如 Mac 到 Windows），檔案的換行格式可能變成了 **LF**，但 Windows 批次檔需要 **CRLF**。
+- **解法**：
+  1. 放棄 `.bat`，改用 PowerShell 執行 `.ps1` 腳本。
+  2. 或者使用 VS Code 將檔案右下角的換行格式切換回 `CRLF` 並存檔。
+
+### 2. PowerShell 出現大量亂碼紅字
+- **症狀**：執行 `.ps1` 時出現問號亂碼（如 `?誘 蠟幅??`），導致安裝失敗。
+- **原因**：PowerShell 對於繁體中文環境的編碼支援問題。
+- **解法**：
+  1. 用「記事本」開啟 `install-addon.ps1` 檔。
+  2. 選擇「另存新檔」，編碼改選 **「具有 BOM 的 UTF-8」(UTF-8 with BOM)**。
+  3. 存檔後重新執行指令。
+
+### 3. 顯示「找不到 DLL」
+- **原因**：本專案目前未上傳預編譯的二進位檔案 (Release)。
+- **解法**：請務必確認您已執行過 `dotnet build -c Release` 編譯指令（請參閱上方的安裝步驟）。
 
 ---
 
