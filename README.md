@@ -35,13 +35,13 @@
 > **開始協作前，請務必遵循以下規範：**
 > 
 > 1. **人類開發者 (Human Developer)**：
->    - 請詳讀 [**SYSTEM_PROMPT.md**](./SYSTEM_PROMPT.md)，了解本專案對 AI 協作角色的定義與行為準則。
+>    - 請詳讀 [**GEMINI.md**](./GEMINI.md)，了解本專案對 AI 協作角色的定義與行為準則。
 >    - 執行任務前，請確保 AI 了解 `GEMINI.md` 中的專案結構。
 > 
 > 2. **AI 助手 (AI Assistant / Agent)**：
 >    - **Context Loading**：啟動時必須載入 [**GEMINI.md**](./GEMINI.md) 以獲取專案地圖與技術指引。
 >    - **Workflow Compliance**：執行任務前，必須檢查 `domain/` 目錄下是否有定義好的工作流程（如上色任務）。
->    - **Safety First**：所有 Revit 操作必須是可逆的，且需遵守 `SYSTEM_PROMPT.md` 中的安全規範。
+>    - **Safety First**：所有 Revit 操作必須是可逆的，使用 Transaction 確保可復原。
 > 
 > ---
 
